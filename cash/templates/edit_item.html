@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% if form.instance.id %}Edit Item{% else %}Add New Item{% endif %}{% endblock %}
+{% block page_header %}{% if form.instance.id %}Edit Item{% else %}Add New Item{% endif %}{% endblock %}
+
+{% block content %}
+    <!-- Load CSS in the head or top of content -->
+    <link rel="stylesheet" href="{% static 'edit.css' %}">
+    
+    <div class="form-wrapper">
+        <h1>{% block title %}{% if form.instance.id %}Edit Item{% else %}Add New Item{% endif %}{% endblock %}</h1>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Name:</label>
+                {{ form.name }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.category.id_for_label }}">Category:</label>
+                {{ form.category }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description:</label>
+                {{ form.description }}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.quantity.id_for_label }}">Quantity:</label>
+                {{ form.quantity }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.price.id_for_label }}">Price:</label>
+                {{ form.price }}
+            </div>
+
+            <button type="submit" class="btn-submit">Save</button>
+            <a href="{% url 'inventory_list' %}" class="btn-cancel">Cancel</a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ inventory_item.name }} Details{% endblock %}
+{% block page_header %}{{ inventory_item.name }} Details{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'details.css' %}">
+    
+    <div class="details-container">
+        <div class="card">
+            <h2>{{ inventory_item.name }}</h2>
+            <p><strong>Description:</strong> {{ inventory_item.description|default:"No description available." }}</p>
+            <p><strong>Category:</strong> {{ inventory_item.category|default:"No category available." }}</p>
+            <p><strong>Quantity:</strong> {{ inventory_item.quantity }}</p>
+            <p><strong>Price:</strong> ${{ inventory_item.price|default:"Price not available" }}</p>
+
+            <div class="actions">
+                <a href="{% url 'edit_inventory' inventory_item.id %}" class="btn-edit">Edit Item</a>
+                <a href="{% url 'inventory_delete' inventory_item.id %}" class="btn-delete">Delete Item</a>
+                <a href="{% url 'inventory_list' %}" class="btn-back">Back to List</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

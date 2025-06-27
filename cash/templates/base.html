@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Keeping Track{% endblock %}</title>
+
+    <!-- Load Static CSS -->
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+</head>
+<body>
+
+    <!-- Header with Navigation -->
+    <header>
+        <nav>
+            <!-- Logo and App Name -->
+            <div class="logo-name">
+                {% if logo_url %}
+                    <img src="{{ logo_url }}" alt="Logo" class="logo">
+                {% endif %}
+                <span style="font-size: 1.2rem; font-weight: bold;">Keeping Track</span>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+            <!-- Navigation Links -->
+            <div class="nav-links" id="navLinks">
+                <a href="{% url 'inventory_list' %}">Inventory</a>
+
+                <!-- Conditional Back Link -->
+                {% if request.resolver_match.url_name != 'inventory_list' %}
+                    <a href="{% url 'base' %}" class="back-link">Back</a>
+                {% endif %}
+
+                <!-- Authenticated User Links -->
+              {% if user.is_authenticated %}
+    <span>Hello, {{ user.username }}</span>
+    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" style="background: none; border: none; padding: 0; color: blue; text-decoration: underline; cursor: pointer;">
+            Logout
+        </button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}">Login</a>
+{% endif %}
+
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Block -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; {% now "Y" %} Inventory System</p>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu Toggle -->
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>

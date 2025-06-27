@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Confirm Delete{% endblock %}
+{% block page_header %}Confirm Delete{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'delete.css' %}">
+    
+    <div class="delete-container">
+        <div class="delete-card">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete the item: <strong>{{ inventory_item.name }}</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn-delete">Confirm Delete</button>
+                <a href="{% url 'inventory_detail' inventory_item.id %}" class="btn-cancel">Cancel</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
